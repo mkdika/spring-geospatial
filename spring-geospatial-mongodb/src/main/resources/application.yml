@@ -23,5 +23,3 @@ spring:
             enabled: true
             additional-paths: src            
         
-        
-

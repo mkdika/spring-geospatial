@@ -21,18 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.mkdika.springgeospatial.mongodb.places;
+package com.mkdika.springgeospatial.postgis.fleet;
 
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -40,43 +37,27 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 @RestController
-public class PlaceController {
+public class FleetLocationController {
 
-    private final PlaceRepository placeRepository;
+    private final FleetLocationRepository fleetRepository;
 
     @Autowired
-    public PlaceController(PlaceRepository placeRepository) {
-        this.placeRepository = placeRepository;
+    public FleetLocationController(FleetLocationRepository placeRepository) {
+        this.fleetRepository = placeRepository;
     }
 
-    @RequestMapping(method = RequestMethod.POST,
-            value = "/places",
+    @PostMapping(value = "/fleets/location",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity insertPlaces(@RequestBody Place place) {
-        place = placeRepository.insert(place);
-        return new ResponseEntity(place, HttpStatus.OK);
+    public ResponseEntity insertFleetLocation(@RequestBody FleetLocation floc) {
+        floc = fleetRepository.save(floc);
+        return new ResponseEntity(floc, HttpStatus.OK);
     }
-
-    @RequestMapping(method = RequestMethod.GET,
-            value = "/places",
+  
+    @GetMapping(value = "/fleets/location/count",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getPlaces() {
-        List<Place> list = placeRepository.findAll();
-        if (list.size() > 0) {
-            return new ResponseEntity(list, HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
-    
-    @RequestMapping(method = RequestMethod.GET,
-            value = "/places/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getPlacesById(@PathVariable String id) {
-        Optional<Place> place = placeRepository.findById(id);
-        if (place.isPresent()) {
-            return new ResponseEntity(place, HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    public ResponseEntity getFleetLocationCount() {
+        long count = fleetRepository.count();
+        return new ResponseEntity(count, HttpStatus.OK);
     }
 }

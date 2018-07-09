@@ -21,31 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.mkdika.springgeospatial.mongodb.places;
+package com.mkdika.springgeospatial.postgis.config;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.bedatadriven.jackson.datatype.jts.JtsModule;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-@Getter
-@Setter
-@Document
-@NoArgsConstructor
-public class Place {
+@Configuration
+public class JacksonConfig {
 
-    @Id
-    String id;
-    String name;
-    Location location;
-
-    public Place(String name, Location location) {
-        this.name = name;
-        this.location = location;
+    @Bean
+    public JtsModule jtsModule() {
+        return new JtsModule();
     }
 }

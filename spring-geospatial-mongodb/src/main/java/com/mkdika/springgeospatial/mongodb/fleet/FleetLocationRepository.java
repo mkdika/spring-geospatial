@@ -21,28 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.mkdika.springgeospatial.mongodb.places;
+package com.mkdika.springgeospatial.mongodb.fleet;
 
-import java.util.Arrays;
-import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-@Getter
-@Setter
-@NoArgsConstructor
-public class Location {
+public interface FleetLocationRepository extends MongoRepository<FleetLocation, String> {
     
-    String type;
-    List<Double> coordinates;
-    
-    public Location(String type, Double ... coordinate) {
-        this.type = type;
-        this.coordinates = Arrays.asList(coordinate);
-    }
 }

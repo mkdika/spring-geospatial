@@ -1,0 +1,39 @@
+server:
+    port: 8081
+    compression:
+        enabled: true
+        mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    
+info:
+    app:
+        description: Spring Boot Geospatial demo with PostGIS
+    
+spring:
+    application:
+        name: spring-geospatial-postgis
+    main:
+        logStartupInfo: false
+    devtools:
+        restart:
+            enabled: true
+            additional-paths: src
+    datasource:
+        url: jdbc:postgresql://localhost:5432/geotest
+        username: postgres
+        password: postgres
+        driverClassName: org.postgresql.Driver
+        initialization-mode: always
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+        hibernate:
+            ddl-auto: create
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+                strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        generate-ddl: true
+        
