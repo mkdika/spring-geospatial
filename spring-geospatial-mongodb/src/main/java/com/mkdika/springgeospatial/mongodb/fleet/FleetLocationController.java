@@ -23,6 +23,7 @@
  */
 package com.mkdika.springgeospatial.mongodb.fleet;
 
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -50,6 +52,7 @@ public class FleetLocationController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity insertFleetLocation(@RequestBody FleetLocation floc) {
+        floc.setUpdateTime(new Date().getTime());
         floc = fleetRepository.insert(floc);
         return new ResponseEntity(floc, HttpStatus.OK);
     }
@@ -59,5 +62,14 @@ public class FleetLocationController {
     public ResponseEntity getFleetLocationCount() {
         long count = fleetRepository.count();
         return new ResponseEntity(count, HttpStatus.OK);
+    }
+    
+    @GetMapping(value = "/fleets",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getNearFleetByCoordinate(@RequestParam(name = "lat", required = true) double latitude,
+                                                   @RequestParam(name = "lng", required = true) double longitude,
+                                                   @RequestParam(name = "rad", required = false, defaultValue = "700") int radius,
+                                                   @RequestParam(name = "limit", required = false, defaultValue = "5") int limit) {
+        return new ResponseEntity( HttpStatus.OK);
     }
 }

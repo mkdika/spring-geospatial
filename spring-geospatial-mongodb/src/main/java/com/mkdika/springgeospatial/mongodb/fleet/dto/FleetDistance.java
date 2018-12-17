@@ -21,16 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.mkdika.springgeospatial.mongodb.fleet;
+package com.mkdika.springgeospatial.mongodb.fleet.dto;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import lombok.Getter;
 
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-public interface FleetLocationRepository extends MongoRepository<FleetLocation, String> {
+@Getter
+//@Document
+public class FleetDistance {
     
-    
-    
+    private final int fleetId;
+    private final double latitude;
+    private final double longitude;
+    private final double distance;
+
+    public FleetDistance(int fleetId, double latitude, double longitude, double distance) {
+        this.fleetId = fleetId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.distance = distance;
+    }
 }

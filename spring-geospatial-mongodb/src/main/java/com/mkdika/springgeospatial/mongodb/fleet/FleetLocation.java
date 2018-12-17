@@ -44,9 +44,5 @@ public class FleetLocation implements Serializable {
     String id;
     int fleetId;
     Location location;
-
-    public FleetLocation(int fleetId, Location location) {
-        this.fleetId = fleetId;
-        this.location = location;
-    }
+    long updateTime;
 }
